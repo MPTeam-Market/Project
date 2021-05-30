@@ -1,8 +1,5 @@
 package com.example.hhhhhh;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,7 +18,7 @@ public class SellItem implements Serializable {
     String img;
 
 
-    public SellItem(String title, String school, String price, String sellerUid, String sellerName, boolean isSelling, String category, String phone, String content, Date createdAt, String img) {
+    public SellItem() {
         this.title = title;
         this.school = school;
         this.price = price;

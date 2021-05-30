@@ -6,12 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -30,7 +30,7 @@ import java.util.Date;
 public class Fragment3 extends Fragment {
     SellAdapter adatper;
     ListView sellview;
-    ArrayList<SellItem> chatRoomList;
+    ArrayList<SellItem> sellItems;
     Button addbtn;
     Spinner category_spinner;
     private FirebaseFirestore firebaseFirestore;
@@ -38,12 +38,13 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         setHasOptionsMenu(true);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         View v = inflater.inflate(R.layout.fragment_3, container, false);
-        chatRoomList = new ArrayList<SellItem>();
+        sellItems = new ArrayList<SellItem>();
         addbtn = (Button) v.findViewById(R.id.plusbtn);
         sellview = (ListView) v.findViewById(R.id.lv4);
 
@@ -60,7 +61,38 @@ public class Fragment3 extends Fragment {
                 startActivity(intent);
             }
         });
+        //ToDO 물물거래/판매 카테고리
         category_spinner = v.findViewById(R.id.fragment4_spinner);
+        category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            SellAdapter adapter;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //TODO 판매인 경우??
+                if(position ==0){
+                    SellItem item = new SellItem();
+                    //TODO 여기서 데이터베이스 SET/GET??이게 맞는지...
+                    //예전에는 데이터베이스에서 가져와서 db.item.getPrice() 이렇게 작성했습니다...
+
+                    item.setPrice(item.getPrice());
+                    item.setSchool(item.getSchool());
+                    item.setTitle(item.getTitle());
+                    adatper.addItem(item);
+                }
+                //물물거래인 경우
+
+                else if(position == 1){
+
+                }
+                sellview.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return v;
 
 

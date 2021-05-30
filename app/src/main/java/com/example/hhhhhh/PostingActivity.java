@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
@@ -41,7 +43,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Date;
 
 public class PostingActivity extends AppCompatActivity {
     private Button posting_btn;
@@ -66,8 +67,8 @@ public class PostingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sellposting);
 
-        final String[] isSell = {"판매", "교환"};
-        final String[] categ = {"식품", "잡동사니"};
+        final String[] isSell = {"전체보기", "판매", "물물거래"};
+        final String[] categ = {"전체보기", "디지털/가전", "의류/잡화", "생활/가공식품"};
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -106,6 +107,64 @@ public class PostingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
                 startActivityForResult(intent, 0);
+            }
+        });
+        //카테고리
+        isSellingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //전체보기
+                if(position == 0){
+                    SellItem item = new SellItem();
+                    //TODO 여기서 데이터베이스 SET/GET??이게 맞는지...
+                    //예전에는 데이터베이스에서 가져와서 db.item.getPrice() 이렇게 작성했습니다...
+
+                    item.setPrice(item.getPrice());
+                    item.setSchool(item.getSchool());
+                    item.setTitle(item.getTitle());
+                }
+                //판매
+                else if(position == 1){
+
+                }
+                //물물거래
+                else if(position == 2){
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //판매 카테고리
+        sellCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //전체보기
+                if(position == 0){
+
+                }
+                //디지털/가전
+                else if(position == 1){
+
+                }
+                //의류/잡화
+                else if(position == 2){
+
+                }
+                //생활/가공식품
+                else if(position == 3){
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -170,7 +229,7 @@ public class PostingActivity extends AppCompatActivity {
                                                     String phone = phoneEditText.getText().toString();
                                                     String content = postContentEditText.getText().toString();
 
-                                                    SellItem trade = new SellItem(title, school, price, sellerUid, sellerName, isSelling, category, phone, content, new Date(), uri.toString());
+                                                    SellItem trade = new SellItem();
 
                                                     storeUpload(trade);
                                                 }
@@ -203,7 +262,7 @@ public class PostingActivity extends AppCompatActivity {
                                 String phone = phoneEditText.getText().toString();
                                 String content = postContentEditText.getText().toString();
 
-                                SellItem trade = new SellItem(title, school, price, sellerUid, sellerName, isSelling, category, phone, content, new Date(), "");
+                                SellItem trade = new SellItem();
 
                                 storeUpload(trade);
                             }
