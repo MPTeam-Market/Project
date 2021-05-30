@@ -34,7 +34,7 @@
         android:layout_width="170dp"
         android:layout_height="127dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/dog" />
+        app:srcCompat="@drawable/logo" />
 
 
     <Space

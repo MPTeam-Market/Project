@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -20,12 +21,34 @@
         android:background="#9e9d9d" />
     //사진올리기
 
-    <ImageView
-        android:id="@+id/posting_img"
-        android:layout_width="100dp"
-        android:layout_gravity="center"
-        android:layout_height="100dp"
-        android:src="@drawable/box" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/box" />
+
+            <Button
+                android:id="@+id/choose_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진 선택" />
+
+            <Button
+                android:id="@+id/upload_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진 올리기" />
+        </LinearLayout>
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -37,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/transparent"
-        android:paddingLeft="20dp"
         android:hint="품목"
+        android:paddingLeft="20dp"
         android:textSize="20dp" />
 
     <View
@@ -53,17 +76,19 @@
         android:weightSum="2">
 
         <Spinner
-
             android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="1" />
-        <Spinner
+            android:layout_weight="1"
+            android:entries="@array/category" />
 
+        <Spinner
             android:id="@+id/sell_category"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:entries="@array/sell_category" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
@@ -119,10 +144,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:gravity="left"
             android:hint="게시글 내용을 입력해주세요\n원하는 거래장소도 알려주세요."
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
-            android:gravity="left"
             android:textSize="15dp" />
 
         <Button

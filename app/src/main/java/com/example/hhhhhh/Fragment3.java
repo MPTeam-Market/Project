@@ -34,6 +34,19 @@ public class Fragment3 extends Fragment {
         sellview = (ListView) v.findViewById(R.id.lv4);
         adatper = new SellAdapter();
         sellview.setAdapter(adatper);
+        //스피너 선택하면 해당 카테고리 목록 나와야함(
+//        category_spinner =  (Spinner)v.findViewById(R.id.category);
+//        category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -49,8 +62,14 @@ public class Fragment3 extends Fragment {
                 startActivity(intent);
             }
         });
-        category_spinner = (Spinner)v.findViewById(R.id.fragment4_spinner);
-
+        //item 선택하면 상세 페이지 나오는
+        sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), Sellcontent.class);
+                startActivity(intent);
+            }
+        });
 
 
         return v;

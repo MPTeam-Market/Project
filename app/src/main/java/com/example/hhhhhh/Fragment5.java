@@ -66,12 +66,7 @@ public class Fragment5 extends Fragment {
     }
 
     /*
-    public Fragment5(ImageView imageView, EditText email, EditText password, DatabaseReference mDatabase) {
-        this.imageView = imageView;
-        Email = email;
-        Password = password;
-        this.mDatabase = mDatabase;
-    }
+
 */
 
     /*
