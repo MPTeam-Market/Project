@@ -98,6 +98,8 @@ public class SignupActivity extends AppCompatActivity  {
                                 db.collection("User").document(uid).set(userInfo);
                                 DatabaseReference reference = database.getReference("users");
                                 reference.child(uid).setValue(hashMap);
+                                user.sendEmailVerification();
+                                Toast.makeText(SignupActivity.this, "Send verification Email to " + getEmail + ".", Toast.LENGTH_SHORT).show();
                                 finish();
                                 Toast.makeText(SignupActivity.this, "Sign up complete", Toast.LENGTH_SHORT).show();
                             }
