@@ -67,47 +67,48 @@ public class SignupActivity extends AppCompatActivity  {
                 String getName = sign_Name.getText().toString().trim();
                 String getSchool = sign_School.getText().toString().trim();
 
-                    Log.d(TAG, "Sign up " + getEmail + " , " + getPassword);
-                    final ProgressDialog mDialog = new ProgressDialog(SignupActivity.this);
-                    mDialog.setMessage("Checking...");
-                    mDialog.show();
+                Log.d(TAG, "Sign up " + getEmail + " , " + getPassword);
+                final ProgressDialog mDialog = new ProgressDialog(SignupActivity.this);
+                mDialog.setMessage("Checking...");
+                mDialog.show();
 
-                    //파이어베이스에 신규계정 등록하기
-                    Auth.createUserWithEmailAndPassword(getEmail, getPassword).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                //파이어베이스에 신규계정 등록하기
+                Auth.createUserWithEmailAndPassword(getEmail, getPassword).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            //가입 성공시
-                            if (task.isSuccessful()) {
-                                mDialog.dismiss();
+                        //가입 성공시
+                        if (task.isSuccessful()) {
+                            mDialog.dismiss();
 
-                                FirebaseUser user = Auth.getCurrentUser();
-                                if (user != null) {
-                                    String uid = user.getUid();
-                                    //해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
-                                    HashMap<Object,String> hashMap = new HashMap<>();
+                            FirebaseUser user = Auth.getCurrentUser();
+                            if (user != null) {
+                                String uid = user.getUid();
+                                //해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
+                                HashMap<Object,String> hashMap = new HashMap<>();
 
-                                    hashMap.put("uid",uid);
-                                    hashMap.put("Email", getEmail);
-                                    hashMap.put("Name", getName);
-                                    hashMap.put("Password", getPassword);
-                                    hashMap.put("Nickname", getNickname);
-                                    hashMap.put("School", getSchool);
-                                    DatabaseReference reference = database.getReference("users");
-                                    reference.child(uid).setValue(hashMap);
-                                    user.sendEmailVerification();
-                                    Toast.makeText(SignupActivity.this, "Send verification Email to " + getEmail + ".", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                    Toast.makeText(SignupActivity.this, "Sign up complete", Toast.LENGTH_SHORT).show();
-                                }
-
-                            } else {
-                                mDialog.dismiss();
-                                Toast.makeText(SignupActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
+                                hashMap.put("uid",uid);
+                                hashMap.put("Email", getEmail);
+                                hashMap.put("Name", getName);
+                                hashMap.put("Password", getPassword);
+                                hashMap.put("Nickname", getNickname);
+                                hashMap.put("School", getSchool);
+                                UserInfo userInfo = new UserInfo(getName, getEmail, getPassword, uid, getNickname, getSchool);
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("User").document(uid).set(userInfo);
+                                DatabaseReference reference = database.getReference("users");
+                                reference.child(uid).setValue(hashMap);
+                                finish();
+                                Toast.makeText(SignupActivity.this, "Sign up complete", Toast.LENGTH_SHORT).show();
                             }
 
+                        } else {
+                            mDialog.dismiss();
+                            Toast.makeText(SignupActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
                         }
-                    });
+
+                    }
+                });
 
 
             }

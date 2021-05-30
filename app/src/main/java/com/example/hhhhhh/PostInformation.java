@@ -15,11 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -43,6 +47,8 @@ public class PostInformation extends AppCompatActivity {
     private int pathCount = 0;
     private int successCount = 0;
     private FirebaseFirestore db;
+    private String school = "gachon";
+    private String sellerName = "tester";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,9 +62,25 @@ public class PostInformation extends AppCompatActivity {
         titleEditText = findViewById(R.id.post_title);
         parent = findViewById(R.id.contentsLayout);
         contentsEditText = findViewById(R.id.contentsEditText);
+        db = FirebaseFirestore.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         findViewById(R.id.btn_generate_picture).setOnClickListener(onClickListener);
         findViewById(R.id.btnPostInfo).setOnClickListener(onClickListener);
+
+        CollectionReference collection = db.collection("User");
+        collection.document(user.getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+                            school = document.getData().get("school").toString();
+                            sellerName = document.getData().get("name").toString();
+                        }
+
+                    }
+                });
 
 
         titleEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -69,6 +91,7 @@ public class PostInformation extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     View.OnClickListener onClickListener = (v -> {
@@ -126,9 +149,9 @@ public class PostInformation extends AppCompatActivity {
 
         if(Title.length() > 0){
             ArrayList<String> contentsList = new ArrayList<>();
-            user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
+
 
             for(int i = 0; i <parent.getChildCount(); i++){
                 LinearLayout linearLayout = (LinearLayout)parent.getChildAt(i);
@@ -167,8 +190,7 @@ public class PostInformation extends AppCompatActivity {
                                             contentsList.set(index, uri.toString());
                                             successCount++;
                                             if(pathList.size() == successCount){
-                                                //완료
-                                                MyInfo myInfo = new MyInfo(Title, "defaultName", new Date(), contentsList, user.getUid(), "gachon");
+                                                MyInfo myInfo = new MyInfo(Title, sellerName, new Date(), contentsList, user.getUid(), school);
                                                 storeUpload(myInfo);
                                             }
                                         }
@@ -185,7 +207,7 @@ public class PostInformation extends AppCompatActivity {
                 }
             }
             if (pathList.size() == 0){
-                MyInfo myInfo = new MyInfo(Title, "defaultName", new Date(), contentsList, user.getUid(), "Gachon");
+                MyInfo myInfo = new MyInfo(Title, sellerName, new Date(), contentsList, user.getUid(), school);
                 storeUpload(myInfo);
             }
         }else {
@@ -194,7 +216,6 @@ public class PostInformation extends AppCompatActivity {
     }
 
     private void storeUpload(MyInfo myInfo) {
-        db = FirebaseFirestore.getInstance();
         db.collection("Info").add(myInfo)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
