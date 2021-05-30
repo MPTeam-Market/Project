@@ -62,23 +62,28 @@ public class Fragment4 extends Fragment {
     public void onResume() {
         super.onResume();
         CollectionReference collectionReference = firebaseFirestore.collection("Info");
-        collectionReference.orderBy("date", Query.Direction.DESCENDING).limit(10).get()
+        collectionReference
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(10).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<MyInfo> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                postList.add(new MyInfo(
-                                        document.getData().get("title").toString(),
-                                        document.getData().get("name").toString(),
-                                        new Date(document.getDate("date").getTime()),
-                                        (ArrayList<String>) document.getData().get("contents"),
-                                        document.getData().get("uid").toString(),
-                                        document.getData().get("university").toString(),
-                                        document.getId()
-                                ));
+                                if(document.getData().get("university").toString().equals("gachon")) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    postList.add(new MyInfo(
+                                            document.getData().get("title").toString(),
+                                            document.getData().get("name").toString(),
+                                            new Date(document.getDate("date").getTime()),
+                                            (ArrayList<String>) document.getData().get("contents"),
+                                            document.getData().get("uid").toString(),
+                                            document.getData().get("university").toString(),
+                                            document.getId()
+                                    ));
+                                }
+                                else{ }
                             }
                             InfoAdapter = new InfoAdapter(getActivity(), postList);
                             recyclerView.setAdapter(InfoAdapter);
