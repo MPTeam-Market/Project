@@ -37,8 +37,8 @@ public class myedit extends AppCompatActivity {
     private FirebaseAuth Auth = FirebaseAuth.getInstance();
     private static final String TAG = "myedit";
     private EditText password;
-    private Button btChoose;
-    private Button btUpload;
+    private Button btChoose,btUpload,btn_nickname,btn_password;
+
     private ImageView ivPreview;
 
     private Uri filePath;
@@ -50,8 +50,8 @@ public class myedit extends AppCompatActivity {
 
         btChoose = (Button) findViewById(R.id.bt_choose);
         btUpload = (Button) findViewById(R.id.bt_upload);
-        Button btn_nickname = (Button) findViewById(R.id.btn_nickname);
-        Button btn_password = (Button) findViewById(R.id.btn_password);
+        btn_nickname = (Button) findViewById(R.id.btn_nickname);
+        btn_password = (Button) findViewById(R.id.btn_password);
 
 
         ivPreview = (ImageView) findViewById(R.id.iv_preview);

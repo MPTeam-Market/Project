@@ -10,6 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hhhhhh">
+        <activity android:name="reputa"/>
+        <activity android:name=".lasttrans"/>
+        <activity android:name="meeting"/>
+        <activity android:name="setting"/>
+        <activity android:name=".myedit"/>
+
         <activity android:name=".Sellcontent" />
         <activity android:name=".PostingActivity" />
         <activity android:name=".FindActivity" />
