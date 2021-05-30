@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (id == R.id.navigation_4){
                         fragment = new Fragment4();
                     } else{
-                        fragment = new Fragment5();
+                        fragment = new Fragment5(imageView, email, password, mDatabase);
                     }
 
                     fragmentTransaction.add(R.id.content_layout, fragment, tag);

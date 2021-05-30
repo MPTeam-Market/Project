@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="내 평판"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="당신의 평판은 : " />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reputa1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#BCFFF9C4"
+                android:gravity="center"
+                android:text="- 거래 -\n+10점 : 친절하셔서 좋았어요! " />
+
+            <TextView
+                android:id="@+id/reputa2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#A9FFECB3"
+                android:gravity="center"
+                android:text="- 모임 -\n+20점 " />
+
+            <TextView
+                android:id="@+id/reputa3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#BCFFF9C4"
+                android:gravity="center"
+                android:text="- 거래 -\n-5점 약속시간에 늦음" />
+
+            <TextView
+                android:id="@+id/reputa4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#A9FFECB3"
+                android:gravity="center"
+                android:text="- 거래 -\n+5점 " />
+
+            <TextView
+                android:id="@+id/reputa5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#BCFFF9C4"
+                android:gravity="center"
+                android:text="- 거래 -\n+??점 - ??" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+
+</LinearLayout>
