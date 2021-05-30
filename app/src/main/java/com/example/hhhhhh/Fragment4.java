@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,7 +31,7 @@ public class Fragment4 extends Fragment {
     private InfoAdapter InfoAdapter;
     private RecyclerView recyclerView;
 
-
+  
     public Fragment4() {
         // Required empty public constructor
     }
@@ -42,7 +41,7 @@ public class Fragment4 extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -120,5 +119,9 @@ public class Fragment4 extends Fragment {
     private void myStartActivity(Class c) {
         Intent intent = new Intent(getActivity(), c);
         startActivityForResult(intent, 0);
+
     }
+
+
+
 }
