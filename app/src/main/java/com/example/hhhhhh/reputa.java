@@ -18,6 +18,10 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +40,10 @@ public class reputa extends AppCompatActivity {
     private InfoAdapter InfoAdapter;
     private RecyclerView recyclerView;
     FirebaseFirestore db;
-
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    String uid = user.getUid();
     public reputa() {
         // Required empty public constructor
     }
@@ -47,11 +54,10 @@ public class reputa extends AppCompatActivity {
     }
 
 
-/*
 
     void getData() {
 
-        mFirebaseFirestore.collection("Events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        mFirebaseFirestore.collection("Info").whereEqualTo("uid", uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -79,7 +85,7 @@ public class reputa extends AppCompatActivity {
         for (int k = 0; k < list.size(); k++) {
 
             // Update each list item
-            DocumentReference ref = db.collection("Events").document(list.get(k));
+            DocumentReference ref = db.collection("Events").document((String) list.get(k));
             batch.update(ref, "field_you_want_to_update", "new_value");
 
         }
@@ -98,6 +104,6 @@ public class reputa extends AppCompatActivity {
 
 
 
-*/
+
 
 }

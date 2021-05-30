@@ -1,7 +1,9 @@
 package com.example.hhhhhh;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,8 +25,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -35,13 +35,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class myedit extends AppCompatActivity {
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+
     private FirebaseAuth Auth = FirebaseAuth.getInstance();
     private static final String TAG = "myedit";
-    private EditText password,nickname;
-    private Button btChoose,btUpload,btn_nickname,btn_password;
-
+    private EditText password;
+    private Button btChoose;
+    private Button btUpload;
     private ImageView ivPreview;
 
     private Uri filePath;
@@ -53,8 +52,8 @@ public class myedit extends AppCompatActivity {
 
         btChoose = (Button) findViewById(R.id.bt_choose);
         btUpload = (Button) findViewById(R.id.bt_upload);
-        btn_nickname = (Button) findViewById(R.id.btn_nickname);
-        btn_password = (Button) findViewById(R.id.btn_password);
+        Button btn_nickname = (Button) findViewById(R.id.btn_nickname);
+        Button btn_password = (Button) findViewById(R.id.btn_password);
 
 
         ivPreview = (ImageView) findViewById(R.id.iv_preview);
@@ -70,7 +69,7 @@ public class myedit extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
             }
         });
-        myRef = database.getInstance().getReference("users");
+
         btUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,32 +77,51 @@ public class myedit extends AppCompatActivity {
                 uploadFile();
             }
         });
-        //닉네임변경
-        nickname = findViewById(R.id.editTextTextNickname);
+
         btn_nickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String getNickname = nickname.getText().toString().trim();
-                myRef.setValue(getNickname);
+                //이미지를 선택
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
             }
         });
 //비밀번호 변경하기
         password = findViewById(R.id.editTextTextPassword);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         btn_password.setOnClickListener(new View.OnClickListener() {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            public void onClick(View view) {
-                String StrPW = password.getText().toString().trim();
-                user.updatePassword(StrPW)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "User password updated.");
-                                }
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(myedit.this);
+                builder.setTitle("비밀번호를 바꾸기");
+                builder.setMessage("비밀번호를 바꾸시겠습니까?");
+                builder.setPositiveButton("바꾸기", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String StrPW = password.getText().toString().trim();
+                        user.updatePassword(StrPW)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "User password updated.");
+                                        }
+                                    }
+                                });
+
+
+                    }
+                })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
                             }
-                        });
+                        })
+                        .show();
+
             }
-            });
+        });
 
     }
     //결과 처리

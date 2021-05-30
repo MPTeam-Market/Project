@@ -96,6 +96,7 @@ public class Fragment5 extends Fragment {
 
         String uid = user.getUid();
         myRef = database.getInstance().getReference("users");
+
         DatabaseReference name = myRef.child(uid).child("Nickname");
         name.addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,12 +110,13 @@ public class Fragment5 extends Fragment {
 
             }
         });
-        DatabaseReference collage = myRef.child(uid).child("collage");
-        name.addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference School = myRef.child(uid).child("School");
+        School.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String text = snapshot.getValue(String.class);
-                textView2.setText(text);
+                textView3.setText(text);
             }
 
             @Override
