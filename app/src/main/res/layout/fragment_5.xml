@@ -26,14 +26,15 @@
         android:layout_height="wrap_content"
         android:text=" " />
 
+
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        android:text=""
         android:textSize="16sp" />
-
     <TextView
         android:id="@+id/collage"
         android:layout_width="match_parent"
@@ -43,14 +44,20 @@
         android:text="가천대학교"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine4"
+    <TextView
+        android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_gravity="center"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textMultiLine" />
+        android:background="@color/gray" />
 
     <Button
         android:id="@+id/edit"
@@ -64,14 +71,12 @@
         android:textSize="16sp" />
 
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine2"
+    <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="17dp"
+        android:layout_height="1dp"
         android:layout_gravity="center"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textMultiLine" />
+        android:background="@color/gray" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -110,14 +115,12 @@
         android:textColor="#558B2F"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/editTextTextMultiLine3"
+    <View
+        android:id="@+id/view5"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="1dp"
         android:layout_gravity="center"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textMultiLine" />
+        android:background="@color/gray" />
 
     <Button
         android:id="@+id/btn_setting"

@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -33,10 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class myedit extends AppCompatActivity {
-
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     private FirebaseAuth Auth = FirebaseAuth.getInstance();
     private static final String TAG = "myedit";
-    private EditText password;
+    private EditText password,nickname;
     private Button btChoose,btUpload,btn_nickname,btn_password;
 
     private ImageView ivPreview;
@@ -67,7 +70,7 @@ public class myedit extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
             }
         });
-
+        myRef = database.getInstance().getReference("users");
         btUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,15 +78,13 @@ public class myedit extends AppCompatActivity {
                 uploadFile();
             }
         });
-
+        //닉네임변경
+        nickname = findViewById(R.id.editTextTextNickname);
         btn_nickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //이미지를 선택
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+                String getNickname = nickname.getText().toString().trim();
+                myRef.setValue(getNickname);
             }
         });
 //비밀번호 변경하기
