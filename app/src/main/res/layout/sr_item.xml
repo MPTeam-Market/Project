@@ -20,61 +20,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <TextView
-            android:id="@+id/sell_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
-            android:text="품목"
-            android:textStyle="bold"
-            android:textColor="#F8B500"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/sell_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="품목"
+                android:textStyle="bold"
+                android:textColor="#F8B500"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/sell_school"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="학교/거래장소"
-            android:textSize="15dp"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"/>
-        <TextView
-            android:id="@+id/sell_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가격"
-            android:textSize="15dp"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"/>
-    </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:gravity="right"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:paddingRight="20dp"
-        android:layout_height="30dp">
-
-
-        <ImageView
-            android:layout_width="20dp"
-            android:background="@drawable/chat_2"
-            android:layout_height="20dp"/>
-
-        <TextView
-            android:id="@+id/comment"
-            android:textSize="15dp"
-            android:text="2"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-
-
+            <TextView
+                android:id="@+id/sell_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="학교/거래장소"
+                android:textSize="15dp"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"/>
+            <TextView
+                android:id="@+id/sell_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                android:textSize="15dp"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"/>
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
 </LinearLayout>
