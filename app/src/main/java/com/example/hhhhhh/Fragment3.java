@@ -47,6 +47,12 @@ public class Fragment3 extends Fragment {
         addbtn = (Button)v.findViewById(R.id.plusbtn);
         sellview = (ListView) v.findViewById(R.id.lv4);
 
+        sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), Sellcontent.class);
+
+
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +60,15 @@ public class Fragment3 extends Fragment {
                 startActivity(intent);
             }
         });
-        category_spinner = (Spinner)v.findViewById(R.id.fragment4_spinner);
+
+        sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), Sellcontent.class);
+                startActivity(intent);
+            }
+        });
+
 
         return v;
     }

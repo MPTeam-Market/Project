@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity  {
@@ -42,9 +43,19 @@ public class LoginActivity extends AppCompatActivity  {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {//성공했을때
-                                    Toast.makeText(LoginActivity.this, "Login complete!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
+
+                                    FirebaseUser user = Auth.getCurrentUser();
+
+                                    if (user.isEmailVerified()) {
+                                        Toast.makeText(LoginActivity.this, "Login complete!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                    }
+
+                                    else {
+                                        Toast.makeText(LoginActivity.this, "Please check email verification.", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 } else {//실패했을때
                                     Toast.makeText(LoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
                                 }

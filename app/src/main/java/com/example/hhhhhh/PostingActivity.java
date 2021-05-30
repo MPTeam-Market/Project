@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -57,6 +59,7 @@ public class PostingActivity extends AppCompatActivity {
     private String sellerName = "tester";
     private String imagePath;
     private ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +108,6 @@ public class PostingActivity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
-
     }
 
     @Override
@@ -231,3 +233,4 @@ public class PostingActivity extends AppCompatActivity {
 
 
 }
+
