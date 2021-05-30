@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class PostingActivity extends AppCompatActivity {
     Button posting_btn;
-    Fragment4 fragment4;
+    Fragment4 fragment3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +20,9 @@ public class PostingActivity extends AppCompatActivity {
         posting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment4 = new Fragment4();
+                fragment3 = new Fragment4();
 
-                getSupportFragmentManager().beginTransaction().add(R.id.lv4, fragment4).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.lv4, fragment3).commit();
             }
         });
 
