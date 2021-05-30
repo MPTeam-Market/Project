@@ -135,8 +135,7 @@ public class Fragment5 extends Fragment {
 
         });
         Button btn_reputa = v.findViewById(R.id.btn_reputa);
-        btn_reputa.setOnClickListener(new View.OnClickListener()
-        {
+        btn_reputa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent1 = new Intent(getActivity(), reputa.class);
                 startActivity(intent1);
@@ -164,8 +163,6 @@ public class Fragment5 extends Fragment {
             Intent intent4 = new Intent(getActivity(), setting.class);
             startActivity(intent4);
         });
-
-
 
 
         return v;
@@ -232,14 +229,6 @@ public class Fragment5 extends Fragment {
 
     }
 */
-
-
-
-
-
-
-
-
 
 
 }
