@@ -14,22 +14,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="설정"
+        android:text="Setting"
         android:textSize="24sp" />
 
 
     <Switch
         android:id="@+id/switch1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="395dp"
+        android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:foregroundGravity="center|right"
+        android:gravity="center|start|right"
         android:text="알람 설정하기" />
 
-
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그아웃" />
+        android:layout_gravity="left"
+        android:foregroundGravity="left"
+        android:gravity="center|start"
+        android:text="로그아웃"
+        android:textColor="@color/black" />
+    <Button
+        android:id="@+id/btn_Withdrawal"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="탈퇴하기"
+        android:textColor="@color/black" />
 
 </LinearLayout>

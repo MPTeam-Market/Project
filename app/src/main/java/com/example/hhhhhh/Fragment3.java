@@ -44,15 +44,15 @@ public class Fragment3 extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_3, container, false);
         chatRoomList = new ArrayList<SellItem>();
-        addbtn = (Button)v.findViewById(R.id.plusbtn);
+        addbtn = (Button) v.findViewById(R.id.plusbtn);
         sellview = (ListView) v.findViewById(R.id.lv4);
 
         sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), Sellcontent.class);
-
-
+            }
+        });
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,17 +60,10 @@ public class Fragment3 extends Fragment {
                 startActivity(intent);
             }
         });
-
-        sellview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), Sellcontent.class);
-                startActivity(intent);
-            }
-        });
-
-
+        category_spinner = v.findViewById(R.id.fragment4_spinner);
         return v;
+
+
     }
 
     @Override
@@ -86,8 +79,8 @@ public class Fragment3 extends Fragment {
                         if (task.isSuccessful()) {
                             ArrayList<SellItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.getData().get("school").toString().toLowerCase().equals("gachon")) {
-                                    if(document.getData().get("img") != null) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                    if (document.getData().get("img") != null) {
                                         postList.add(new SellItem(
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
@@ -102,7 +95,7 @@ public class Fragment3 extends Fragment {
                                                 document.getData().get("img").toString(),
                                                 document.getId()
                                         ));
-                                    }else{
+                                    } else {
                                         postList.add(new SellItem(
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
@@ -126,3 +119,4 @@ public class Fragment3 extends Fragment {
                 });
     }
 }
+

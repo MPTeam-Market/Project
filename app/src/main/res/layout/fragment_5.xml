@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/collage"
@@ -40,25 +40,38 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:text="가천대학교" />
+        android:text="가천대학교"
+        android:textSize="16sp" />
 
+    <EditText
+        android:id="@+id/editTextTextMultiLine4"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/edit"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:gravity="center|start"
         android:text="회원정보 변경"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:backgroundTint="#BBDEFB" />
+        android:textColor="#558B2F"
+        android:textSize="16sp" />
 
-    <Space
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine2"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="17dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textMultiLine" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -68,66 +81,52 @@
 
     <Button
         android:id="@+id/btn_reputa"
-        style="@style/Theme.Hhhhhh"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:layout_weight="2"
-        android:background="#FDBA35"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:gravity="center|start"
         android:text="내가 쓴 글"
-        android:textColor="@color/black"
-        android:textColorHint="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:backgroundTint="#FFF9C4" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:textColor="#558B2F"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btn_last"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:layout_weight="2"
-        android:background="#DCEDC8"
-        android:text="지난 거래 내역"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:backgroundTint="#DCEDC8" />
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="거래 내역"
+        android:textColor="#558B2F"
+        android:textSize="16sp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
     <Button
         android:id="@+id/btn_meet"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:layout_weight="2"
-        android:background="#B2BBDEFB"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="모임 참여 내역"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:backgroundTint="#B2BBDEFB" />
+        android:textColor="#558B2F"
+        android:textSize="16sp" />
 
-    <Space
+    <EditText
+        android:id="@+id/editTextTextMultiLine3"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/btn_setting"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#DCEDC8"
+        android:gravity="center|start"
         android:text="설정"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:backgroundTint="#DCEDC8" />
+        android:textColor="@color/black" />
+
 
 </LinearLayout>
