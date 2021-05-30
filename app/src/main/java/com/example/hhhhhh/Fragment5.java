@@ -87,12 +87,9 @@ public class Fragment5 extends Fragment {
         TextView textView, textView2,textView3,textView4;
         View v = inflater.inflate(R.layout.fragment_5, container, false);
         textView = v.findViewById(R.id.name);   //이메일 읽기
-        textView2 = v.findViewById(R.id.collage);
-        textView3 = v.findViewById(R.id.nickname);
-        textView4 = v.findViewById(R.id.name2);
         FirebaseUser user = Auth.getCurrentUser();
         textView.setText(user.getEmail());
-        textView3.setText(_userID);
+
 
 /*
         myRef = database.getReference("users");
