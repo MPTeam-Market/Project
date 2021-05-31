@@ -252,7 +252,7 @@ public class PostingActivity extends AppCompatActivity {
                             if (title.length() > 0) {
                                 boolean isSelling = (isSellingSpinner.getSelectedItem().toString().equals("판매"));
                                 String price;
-                                if(isSelling) {
+                                if(!isSelling) {
                                     price = "물물거래";
                                 }
                                 else{
