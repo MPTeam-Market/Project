@@ -43,6 +43,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Date;
 
 public class PostingActivity extends AppCompatActivity {
     private Button posting_btn;
@@ -67,8 +68,8 @@ public class PostingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sellposting);
 
-        final String[] isSell = {"전체보기", "판매", "물물거래"};
-        final String[] categ = {"전체보기", "디지털/가전", "의류/잡화", "생활/가공식품"};
+        final String[] isSell = {"판매", "물물거래"};
+        final String[] categ = {"디지털/가전", "의류/잡화", "생활/가공식품"};
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -115,13 +116,7 @@ public class PostingActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //전체보기
                 if(position == 0){
-                    SellItem item = new SellItem();
-                    //TODO 여기서 데이터베이스 SET/GET??이게 맞는지...
-                    //예전에는 데이터베이스에서 가져와서 db.item.getPrice() 이렇게 작성했습니다...
 
-                    item.setPrice(item.getPrice());
-                    item.setSchool(item.getSchool());
-                    item.setTitle(item.getTitle());
                 }
                 //판매
                 else if(position == 1){
@@ -229,7 +224,7 @@ public class PostingActivity extends AppCompatActivity {
                                                     String phone = phoneEditText.getText().toString();
                                                     String content = postContentEditText.getText().toString();
 
-                                                    SellItem trade = new SellItem();
+                                                    SellItem trade = new SellItem(title, school, price, sellerUid, sellerName, isSelling, category, phone, content, new Date(), imagePath);
 
                                                     storeUpload(trade);
                                                 }
@@ -262,7 +257,7 @@ public class PostingActivity extends AppCompatActivity {
                                 String phone = phoneEditText.getText().toString();
                                 String content = postContentEditText.getText().toString();
 
-                                SellItem trade = new SellItem();
+                                SellItem trade = new SellItem(title, school, price, sellerUid, sellerName, isSelling, category, phone, content, new Date(), imagePath);
 
                                 storeUpload(trade);
                             }
