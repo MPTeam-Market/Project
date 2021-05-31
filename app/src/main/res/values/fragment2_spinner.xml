@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="participate_category">
+        <item>전체보기</item>
+        <item>스터디</item>
+        <item>프로젝트</item>
+        <item>동호회</item>
+    </string-array>
+</resources>
