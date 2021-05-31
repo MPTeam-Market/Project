@@ -13,10 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,6 +35,8 @@ public class Fragment4 extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private InfoAdapter InfoAdapter;
     private RecyclerView recyclerView;
+    FirebaseUser user;
+    String school;
 
   
     public Fragment4() {
@@ -60,6 +67,26 @@ public class Fragment4 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        super.onResume();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = firebaseFirestore.collection("User").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        school = document.getData().get("school").toString();
+                    } else {
+                    }
+                } else {
+                }
+                resume();
+            }
+        });
+    }
+
+    public void resume(){
         CollectionReference collectionReference = firebaseFirestore.collection("Info");
         collectionReference
                 .orderBy("date", Query.Direction.DESCENDING)
@@ -70,7 +97,8 @@ public class Fragment4 extends Fragment {
                         if (task.isSuccessful()) {
                             ArrayList<MyInfo> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.getData().get("university").toString().equals("gachon")) {
+                                if(document.getData().get("university").toString().equals("gachon")||
+                                        document.getData().get("school").toString().toLowerCase().equals(school)) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     postList.add(new MyInfo(
                                             document.getData().get("title").toString(),
