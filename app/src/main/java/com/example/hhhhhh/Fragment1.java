@@ -46,26 +46,46 @@ public class Fragment1 extends Fragment {
         addbtn = (Button) v.findViewById(R.id.plusbtn);
         joinview = (ListView) v.findViewById(R.id.lv1);
 
-        joinview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), Sellcontent.class);
-            }
-        });
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PostingActivity.class);
+                Intent intent = new Intent(getActivity(), JoinPostingActivity.class);
                 startActivity(intent);
             }
         });
         category_spinner = v.findViewById(R.id.fragment1_spinner);
+        //새로고침 위해 select 리스너를 넣어줌
+        category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), dummyActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        String text = category_spinner.getSelectedItem().toString();
+
+        if(text.equals("전체보기")){
+            update();
+        }else if(text.equals("배달대행")){
+            updatesell();
+        }else{
+            updatetrade();
+        }
+    }
+
+    public void update(){
         CollectionReference collectionReference = firebaseFirestore.collection("join");
         collectionReference
                 .orderBy("date", Query.Direction.DESCENDING)
@@ -74,17 +94,17 @@ public class Fragment1 extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<SellItem> postList = new ArrayList<>();
+                            ArrayList<JoinItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
                                     if (document.getData().get("img") != null) {
-                                        postList.add(new SellItem(
+                                        postList.add(new JoinItem(
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
-                                                document.getData().get("price").toString(),
-                                                document.getData().get("sellerUid").toString(),
-                                                document.getData().get("sellerName").toString(),
-                                                (Boolean) document.getData().get("isSelling"),
+                                                document.getData().get("salary").toString(),
+                                                document.getData().get("writerUid").toString(),
+                                                document.getData().get("writerName").toString(),
+                                                (Boolean) document.getData().get("isJoin"),
                                                 document.getData().get("category").toString(),
                                                 document.getData().get("phone").toString(),
                                                 document.getData().get("content").toString(),
@@ -93,10 +113,10 @@ public class Fragment1 extends Fragment {
                                                 document.getId()
                                         ));
                                     } else {
-                                        postList.add(new SellItem(
+                                        postList.add(new JoinItem(
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
-                                                document.getData().get("price").toString(),
+                                                document.getData().get("salary").toString(),
                                                 document.getData().get("sellerUid").toString(),
                                                 document.getData().get("sellerName").toString(),
                                                 (Boolean) document.getData().get("isSelling"),
@@ -106,6 +126,112 @@ public class Fragment1 extends Fragment {
                                                 new Date(document.getDate("date").getTime()),
                                                 "", document.getId()
                                         ));
+                                    }
+                                }
+                            }
+                            adatper = new JoinAdapter(getActivity(), postList);
+                            joinview.setAdapter(adatper);
+                        }
+                    }
+                });
+    }
+
+    public void updatesell() {
+        CollectionReference collectionReference = firebaseFirestore.collection("join");
+        collectionReference
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(10).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<JoinItem> postList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                    if(((Boolean) document.getData().get("isJoin"))) {
+                                        if (document.getData().get("img") != null) {
+                                            postList.add(new JoinItem(
+                                                    document.getData().get("title").toString(),
+                                                    document.getData().get("school").toString(),
+                                                    document.getData().get("salary").toString(),
+                                                    document.getData().get("writerUid").toString(),
+                                                    document.getData().get("writerName").toString(),
+                                                    (Boolean) document.getData().get("isJoin"),
+                                                    document.getData().get("category").toString(),
+                                                    document.getData().get("phone").toString(),
+                                                    document.getData().get("content").toString(),
+                                                    new Date(document.getDate("date").getTime()),
+                                                    document.getData().get("img").toString(),
+                                                    document.getId()
+                                            ));
+                                        } else {
+                                            postList.add(new JoinItem(
+                                                    document.getData().get("title").toString(),
+                                                    document.getData().get("school").toString(),
+                                                    document.getData().get("salary").toString(),
+                                                    document.getData().get("sellerUid").toString(),
+                                                    document.getData().get("sellerName").toString(),
+                                                    (Boolean) document.getData().get("isSelling"),
+                                                    document.getData().get("category").toString(),
+                                                    document.getData().get("phone").toString(),
+                                                    document.getData().get("content").toString(),
+                                                    new Date(document.getDate("date").getTime()),
+                                                    "", document.getId()
+                                            ));
+                                        }
+                                    }
+                                }
+                            }
+                            adatper = new JoinAdapter(getActivity(), postList);
+                            joinview.setAdapter(adatper);
+                        }
+                    }
+                });
+    }
+
+    public void updatetrade(){
+        CollectionReference collectionReference = firebaseFirestore.collection("join");
+        collectionReference
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(10).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<JoinItem> postList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                    if(!((Boolean) document.getData().get("isJoin"))) {
+                                        if (document.getData().get("img") != null) {
+                                            postList.add(new JoinItem(
+                                                    document.getData().get("title").toString(),
+                                                    document.getData().get("school").toString(),
+                                                    document.getData().get("salary").toString(),
+                                                    document.getData().get("writerUid").toString(),
+                                                    document.getData().get("writerName").toString(),
+                                                    (Boolean) document.getData().get("isJoin"),
+                                                    document.getData().get("category").toString(),
+                                                    document.getData().get("phone").toString(),
+                                                    document.getData().get("content").toString(),
+                                                    new Date(document.getDate("date").getTime()),
+                                                    document.getData().get("img").toString(),
+                                                    document.getId()
+                                            ));
+                                        } else {
+                                            postList.add(new JoinItem(
+                                                    document.getData().get("title").toString(),
+                                                    document.getData().get("school").toString(),
+                                                    document.getData().get("salary").toString(),
+                                                    document.getData().get("sellerUid").toString(),
+                                                    document.getData().get("sellerName").toString(),
+                                                    (Boolean) document.getData().get("isSelling"),
+                                                    document.getData().get("category").toString(),
+                                                    document.getData().get("phone").toString(),
+                                                    document.getData().get("content").toString(),
+                                                    new Date(document.getDate("date").getTime()),
+                                                    "", document.getId()
+                                            ));
+                                        }
                                     }
                                 }
                             }

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/together_textview"
+        android:id="@+id/join_textview"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
@@ -21,17 +21,8 @@
         android:layout_height="2dp"
         android:background="#9e9d9d" />
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:src="@drawable/box" />
-
     <View
-        android:id="@+id/contentview1"
+        android:id="@+id/joincontentview1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#9e9d9d" />
