@@ -73,9 +73,9 @@ public class SellAdapter extends BaseAdapter {
         ImageView img = (ImageView) convertView.findViewById(R.id.sellimg);
 
         SellItem item = sellItemList.get(position);
-        school.setText(item.getSchool());
-        title.setText(item.getTitle());
-        price.setText(item.getPrice());
+        school.setText("학교: "+item.getSchool());
+        title.setText("제품명: "+item.getTitle());
+        price.setText("가격: "+item.getPrice());
         if(item.getImg() != "" && item.getImg() != null){
             img.setScaleType(ImageView.ScaleType.FIT_XY);
             img.setAdjustViewBounds(true);
