@@ -4,18 +4,31 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="421dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="내가 쓴 글" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"/>
+        android:layout_height="14dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="625dp">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
 </ScrollView>
