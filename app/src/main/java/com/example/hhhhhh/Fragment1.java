@@ -14,10 +14,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,6 +38,8 @@ public class Fragment1 extends Fragment {
     Button addbtn;
     Spinner category_spinner;
     private FirebaseFirestore firebaseFirestore;
+    FirebaseUser user;
+    String school;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +81,25 @@ public class Fragment1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        DocumentReference docRef = firebaseFirestore.collection("User").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        school = document.getData().get("school").toString();
+                    } else {
+                    }
+                } else {
+                }
+                resume();
+            }
+        });
+    }
+
+    public void resume(){
         String text = category_spinner.getSelectedItem().toString();
 
         if(text.equals("전체보기")){
@@ -96,7 +122,8 @@ public class Fragment1 extends Fragment {
                         if (task.isSuccessful()) {
                             ArrayList<JoinItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon") ||
+                                        document.getData().get("school").toString().toLowerCase().equals(school)) {
                                     if (document.getData().get("img") != null) {
                                         postList.add(new JoinItem(
                                                 document.getData().get("title").toString(),
@@ -147,7 +174,8 @@ public class Fragment1 extends Fragment {
                         if (task.isSuccessful()) {
                             ArrayList<JoinItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon") ||
+                                        document.getData().get("school").toString().toLowerCase().equals(school)) {
                                     if(((Boolean) document.getData().get("isJoin"))) {
                                         if (document.getData().get("img") != null) {
                                             postList.add(new JoinItem(
@@ -200,7 +228,8 @@ public class Fragment1 extends Fragment {
                         if (task.isSuccessful()) {
                             ArrayList<JoinItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon") ||
+                                        document.getData().get("school").toString().toLowerCase().equals(school)) {
                                     if(!((Boolean) document.getData().get("isJoin"))) {
                                         if (document.getData().get("img") != null) {
                                             postList.add(new JoinItem(
