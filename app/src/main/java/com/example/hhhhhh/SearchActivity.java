@@ -57,7 +57,6 @@ public class SearchActivity extends AppCompatActivity {
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
         System.out.println("중간 리스트 점검" + list);
-        arraylist.addAll(list);
 
         // 리스트에 연동될 아답터를 생성한다.
         adapter = new SearchAdapter(list, this);
