@@ -67,7 +67,6 @@ public class Fragment4 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        super.onResume();
         user = FirebaseAuth.getInstance().getCurrentUser();
         DocumentReference docRef = firebaseFirestore.collection("User").document(user.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -77,9 +76,7 @@ public class Fragment4 extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         school = document.getData().get("school").toString();
-                    } else {
                     }
-                } else {
                 }
                 resume();
             }
@@ -98,7 +95,7 @@ public class Fragment4 extends Fragment {
                             ArrayList<MyInfo> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if(document.getData().get("university").toString().equals("gachon")||
-                                        document.getData().get("school").toString().toLowerCase().equals(school)) {
+                                        document.getData().get("university").toString().toLowerCase().equals(school)) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     postList.add(new MyInfo(
                                             document.getData().get("title").toString(),
