@@ -32,11 +32,11 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
     public static final String INTENT_NAME_RESULT = "selected";
 
-    private List<String> list;          // 데이터를 넣은 리스트변수
+    private ArrayList<String> list = null;          // 데이터를 넣은 리스트변수
     private ListView listView;          // 검색을 보여줄 리스트변수
     private EditText editSearch;        // 검색어를 입력할 Input 창
     private SearchAdapter adapter;      // 리스트뷰에 연결할 아답터
-    private ArrayList<String> arraylist;
+    private ArrayList<String> arraylist = null;
     private String requestUrl, str, str_sch, str_cam;
     private ImageView back;
 
@@ -54,11 +54,10 @@ public class SearchActivity extends AppCompatActivity {
         list = new ArrayList<String>();
         arraylist = new ArrayList<String>();
 
-        // 검색에 사용할 데이터을 미리 저장한다.
-        settingList();
-
-
-
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute();
+        System.out.println("중간 리스트 점검" + list);
+        arraylist.addAll(list);
 
         // 리스트에 연동될 아답터를 생성한다.
         adapter = new SearchAdapter(list, this);
@@ -92,7 +91,6 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 String result = (String) adapter.getItem(position);
-                Log.d("sel", result);
                 Intent intent = new Intent();
                 intent.putExtra(INTENT_NAME_RESULT, result);
                 setResult(Activity.RESULT_OK, intent);
@@ -110,9 +108,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // 문자 입력이 없을때는 모든 데이터를 보여준다.
         if (charText.length() == 0) {
-            for (int index = 0; index < arraylist.size(); index++) {
-                list.add(arraylist.get(index));
-            }
+            list.addAll(arraylist);
         }
         // 문자 입력을 할때..
         else {
@@ -129,25 +125,14 @@ public class SearchActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    // 검색에 사용될 데이터를 리스트에 추가한다.
-    public void settingList(){
-       MyAsyncTask myAsyncTask = new MyAsyncTask();
-       myAsyncTask.execute();
-        for (int index = 0; index < list.size(); index++) {
-            arraylist.add(list.get(index));
-        }
-    }
 
     public class MyAsyncTask extends AsyncTask<String, Void, String> {
-
 
         @Override
         protected String doInBackground(String... strings) {
             Log.d("파싱이 시작됩니다", "파싱 시작");
-
             requestUrl = "https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=c2798400738f904c2d5c286ff1e8b8cf&svcType=api&svcCode=SCHOOL&contentType=xml&gubun=univ_list&thisPage=1&perPage=500";
             try {
-
                 boolean b_campus = false;
                 boolean b_info = false;
                 boolean b_type = false;
@@ -175,14 +160,15 @@ public class SearchActivity extends AppCompatActivity {
                             break;
                         case XmlPullParser.END_TAG:
                             if (parser.getName().equals("content") && str != null) {
+                                arraylist.add(str);
                                 list.add(str);
                             }
                             break;
                         case XmlPullParser.START_TAG:
                             if (parser.getName().equals("content")) {
-                                str = null;
-                                str_cam = null;
-                                str_sch = null;
+                                str = new String();
+                                str_cam = new String();
+                                str_sch = new String();
                             }
                             //각각의 api속 변수명이다.
                             if (parser.getName().equals("campusName")) b_campus = true;
@@ -196,7 +182,7 @@ public class SearchActivity extends AppCompatActivity {
                         case XmlPullParser.TEXT:
                             if (b_campus) {
                                 str_cam = parser.getText();
-                                if (str_cam.equals("본교")) {
+                                if (str_cam.equals("본교") || str_cam.equals("")) {
                                     cam = true;
                                 }
                                 b_campus = false;
@@ -237,6 +223,8 @@ public class SearchActivity extends AppCompatActivity {
             }
             return null;
         }
+
+
     }
 
 
