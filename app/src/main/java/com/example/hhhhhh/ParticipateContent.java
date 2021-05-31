@@ -28,19 +28,8 @@ public class ParticipateContent extends AppCompatActivity {
         TextView phone = findViewById(R.id.participate_content_phone);
         phone.setText("연락처: "+participateItem.getPhone());
 
-        String category1;
-        if(participateItem.getisParticipate()){
-            category1 = "스터디";
-        }
-        else if (participateItem.getisParticipate()){
-            category1 = "프로젝트";
-        }
-        else {
-            category1 = "동호회";
-        }
-
         TextView category = findViewById(R.id.participate_content_title);
-        category.setText("카테고리: "+category1+", "+participateItem.getCategory());
+        category.setText("카테고리: "+participateItem.getisParticipate()+", "+participateItem.getCategory());
 
         TextView content = findViewById(R.id.participate_content__content);
         content.setText(participateItem.getContent());
