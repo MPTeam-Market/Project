@@ -91,7 +91,7 @@ public class ParticipatePost extends AppCompatActivity {
         joinLocationSpinner.setAdapter(adapter2);
 
 
-        posting_btn = findViewById(R.id.joinposting_btn);
+        posting_btn = findViewById(R.id.participate_posting_btn);
         posting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
