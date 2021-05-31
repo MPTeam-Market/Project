@@ -18,7 +18,7 @@ public class SellItem implements Serializable {
     String img;
 
 
-    public SellItem() {
+    public SellItem(String title, String school, String price, String sellerUid, String sellerName, boolean isSelling, String category, String phone, String content, Date createdAt, String img) {
         this.title = title;
         this.school = school;
         this.price = price;
