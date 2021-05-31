@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,10 +37,11 @@ public class SignupActivity extends AppCompatActivity  {
     private FirebaseFirestore store;
     private DatabaseReference Database;
 
-    private EditText sign_Email, sign_Nickname, sign_Password, sign_Name, Join, sign_School;
-    private Button Joinbtn;
+    private EditText sign_Email, sign_Nickname, sign_Password, sign_Name;
+    private TextView sign_School;
+    private Button Joinbtn, FindSch;
     private ImageView back;
-
+    private String result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class SignupActivity extends AppCompatActivity  {
         sign_Name = findViewById(R.id.login_name);
         sign_School = findViewById(R.id.login_school);
         Joinbtn = findViewById(R.id.login_join);
+        FindSch = findViewById(R.id.find_school);
 
         back.setOnClickListener(new MyListener());
 
@@ -65,9 +68,10 @@ public class SignupActivity extends AppCompatActivity  {
                 String getNickname = sign_Nickname.getText().toString().trim();
                 String getPassword = sign_Password.getText().toString().trim();
                 String getName = sign_Name.getText().toString().trim();
-                String getSchool = sign_School.getText().toString().trim();
+                String getSchool = sign_School.getText().toString();
 
                 Log.d(TAG, "Sign up " + getEmail + " , " + getPassword);
+                Log.d(TAG, getSchool);
                 final ProgressDialog mDialog = new ProgressDialog(SignupActivity.this);
                 mDialog.setMessage("Checking...");
                 mDialog.show();
@@ -115,8 +119,31 @@ public class SignupActivity extends AppCompatActivity  {
 
             }
         });
+
+        FindSch.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivityForResult(intent, 100);
+            }
+
+        });
+
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==100){
+            if (resultCode==RESULT_OK) {
+                result = data.getStringExtra(SearchActivity.INTENT_NAME_RESULT);
+                sign_School.setText(result);
+            }
+        }
+    }
     class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
