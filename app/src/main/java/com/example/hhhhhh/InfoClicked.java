@@ -43,7 +43,7 @@ public class InfoClicked extends AppCompatActivity {
                 String contents = contentsList.get(i);
                 if (Patterns.WEB_URL.matcher(contents).matches()) {
                     ImageView imageView = new ImageView(this);
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER);
                     imageView.setLayoutParams(layoutParams);
                     contentsLayout.addView(imageView);
                     Glide.with(this).load(contents).override(1000).into(imageView);
