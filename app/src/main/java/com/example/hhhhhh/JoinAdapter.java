@@ -45,15 +45,24 @@ public class JoinAdapter extends BaseAdapter {
         return position;
     }
 
+    public static class ViewHolder{
+        public TextView t;
+        public TextView p;
+        public TextView s;
+    }
+
     @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
 
+        final ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.join_item, parent, false);
+
+            viewHolder = new ViewHolder();
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,18 +73,20 @@ public class JoinAdapter extends BaseAdapter {
                 }
             });
 
+            viewHolder.t = (TextView) convertView.findViewById(R.id.join_title);
+            viewHolder.p = (TextView) convertView.findViewById(R.id.join_price);
+            viewHolder.s = (TextView) convertView.findViewById(R.id.join_school);
+
+            convertView.setTag(viewHolder);
+        }
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        //convertView = LayoutInflater.from(context).inflate(R.layout.chatroomlist,null);
-        TextView title = (TextView) convertView.findViewById(R.id.join_title);
-        TextView price = (TextView) convertView.findViewById(R.id.join_price);
-        TextView school = (TextView) convertView.findViewById(R.id.join_school);
-
-
         JoinItem item = joinItemList.get(position);
-        school.setText("학교: "+item.getSchool());
-        title.setText(item.getTitle());
-        price.setText("작성자:"+item.getWriterName());
+        viewHolder.t.setText("학교: "+item.getSchool());
+        viewHolder.p.setText(item.getTitle());
+        viewHolder.s.setText("작성자:"+item.getWriterName());
 
         return convertView;
     }
