@@ -38,7 +38,7 @@ public class myedit extends AppCompatActivity {
 
     private FirebaseAuth Auth = FirebaseAuth.getInstance();
     private static final String TAG = "myedit";
-    private EditText password;
+    private EditText password,nickname;
     private Button btChoose;
     private Button btUpload;
     private ImageView ivPreview;
@@ -52,7 +52,7 @@ public class myedit extends AppCompatActivity {
 
         btChoose = (Button) findViewById(R.id.bt_choose);
         btUpload = (Button) findViewById(R.id.bt_upload);
-        Button btn_nickname = (Button) findViewById(R.id.btn_nickname);
+
         Button btn_password = (Button) findViewById(R.id.btn_password);
 
 
@@ -78,19 +78,13 @@ public class myedit extends AppCompatActivity {
             }
         });
 
-        btn_nickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //이미지를 선택
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
-            }
-        });
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+/*
 //비밀번호 변경하기
         password = findViewById(R.id.editTextTextPassword);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         btn_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +116,7 @@ public class myedit extends AppCompatActivity {
 
             }
         });
-
+*/
     }
     //결과 처리
 

@@ -9,49 +9,64 @@
     android:orientation="vertical"
     android:padding="6dp">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="거래 내역"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="24sp" />
+    <LinearLayout
+        android:layout_width="521dp"
+        android:layout_height="63dp"
+        android:orientation="horizontal"/>
 
+    <LinearLayout
+        android:layout_width="523dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
 
-            <ListView
-                android:id="@+id/listviewmsg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_width="276dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center|center_horizontal|top"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_input1"
+            android:foregroundGravity="top|center"
+            android:gravity="center|top"
+            android:weightSum="10">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
+            <TextView
+
+                android:layout_width="57dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:fontFamily="@font/opensans_bold"
+                android:gravity="left|center_vertical"
+                android:text="PASSWORD"
+                android:textColor="#191919"
+                android:textSize="10sp" />
+
+            <EditText
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="154dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:background="@null"
+                android:includeFontPadding="false"
+                android:inputType="textPassword"
+                android:textColor="#707070"
+                android:textSize="14sp" />
 
         </LinearLayout>
-    </ScrollView>
 
+        <Button
+            android:id="@+id/btn_password"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="#00DCEDC8"
+            android:gravity="bottom|center_horizontal"
+            android:text="비밀번호 변경"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:backgroundTint="#52DCEDC8" />
+
+    </LinearLayout>
 
 </LinearLayout>
