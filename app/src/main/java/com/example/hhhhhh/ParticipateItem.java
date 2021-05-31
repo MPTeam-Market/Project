@@ -12,7 +12,7 @@ public class ParticipateItem implements Serializable {
     String school;
     String participate_Uid;
     String participate_Name;
-    boolean isparticipate;
+    String isparticipate;
     String category;
     String phone;
     String content;
@@ -21,7 +21,7 @@ public class ParticipateItem implements Serializable {
     String img;
 
 
-    public ParticipateItem(String title, String school, String limitmember, String participate_Uid, String participate_Name, boolean isparticipate, String category, String phone, String content, Date createdAt, String img) {
+    public ParticipateItem(String title, String school, String limitmember, String participate_Uid, String participate_Name, String isparticipate, String category, String phone, String content, Date createdAt, String img) {
         this.title = title;
         this.school = school;
         this.limitmember = limitmember;
@@ -35,7 +35,7 @@ public class ParticipateItem implements Serializable {
         this.img = img;
     }
 
-    public ParticipateItem(String title, String school, String limitmember, String participate_Uid, String participate_Name, boolean isparticipate, String category, String phone, String content, Date createdAt, String img, String id) {
+    public ParticipateItem(String title, String school, String limitmember, String participate_Uid, String participate_Name, String isparticipate, String category, String phone, String content, Date createdAt, String img, String id) {
         this.title = title;
         this.school = school;
         this.limitmember = limitmember;
@@ -64,7 +64,7 @@ public class ParticipateItem implements Serializable {
     public String getParticipateName() {
         return participate_Name;
     }
-    public boolean getisParticipate() { return isparticipate; }
+    public String getisParticipate() { return isparticipate; }
     public String getCategory() {
         return category;
     }
@@ -85,7 +85,7 @@ public class ParticipateItem implements Serializable {
     }
     public void setParticipateUid(String participate_Uid) {this.participate_Uid = participate_Uid;}
     public void setParticipateName(String participate_Name) {this.participate_Name = participate_Name;}
-    public void setisParticipate(boolean isparticipate) { this.isparticipate = isparticipate; }
+    public void setisParticipate(String isparticipate) { this.isparticipate = isparticipate; }
     public void setCategory(String category) {
         this.category = category;
     }

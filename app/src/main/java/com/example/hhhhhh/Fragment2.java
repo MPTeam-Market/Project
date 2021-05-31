@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class Fragment2 extends Fragment {
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), JoinPostingActivity.class);
+                Intent intent = new Intent(getActivity(), ParticipatePost.class);
                 startActivity(intent);
             }
         });
@@ -107,9 +106,9 @@ public class Fragment2 extends Fragment {
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
                                                 document.getData().get("limitmember").toString(),
-                                                document.getData().get("participate_Uid").toString(),
-                                                document.getData().get("participate_Name").toString(),
-                                                (Boolean) document.getData().get("isParticipate"),
+                                                document.getData().get("participateUid").toString(),
+                                                document.getData().get("participateName").toString(),
+                                                document.getData().get("isParticipate").toString(),
                                                 document.getData().get("category").toString(),
                                                 document.getData().get("phone").toString(),
                                                 document.getData().get("content").toString(),
@@ -122,9 +121,9 @@ public class Fragment2 extends Fragment {
                                                 document.getData().get("title").toString(),
                                                 document.getData().get("school").toString(),
                                                 document.getData().get("limitmember").toString(),
-                                                document.getData().get("participate_Uid").toString(),
-                                                document.getData().get("participate_Name").toString(),
-                                                (Boolean) document.getData().get("isParticipate"),
+                                                document.getData().get("participateUid").toString(),
+                                                document.getData().get("participateName").toString(),
+                                                document.getData().get("isParticipate").toString(),
                                                 document.getData().get("category").toString(),
                                                 document.getData().get("phone").toString(),
                                                 document.getData().get("content").toString(),
@@ -153,15 +152,15 @@ public class Fragment2 extends Fragment {
                             ArrayList<ParticipateItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
-                                    if(((Boolean) document.getData().get("isJoin"))) {
+                                    if(document.getData().get("isParticipate").toString().equals("스터디")) {
                                         if (document.getData().get("img") != null) {
                                             postList.add(new ParticipateItem(
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),
@@ -174,9 +173,9 @@ public class Fragment2 extends Fragment {
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),
@@ -206,15 +205,15 @@ public class Fragment2 extends Fragment {
                             ArrayList<ParticipateItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
-                                    if(!((Boolean) document.getData().get("isJoin"))) {
+                                    if(document.getData().get("isParticipate").toString().equals("프로젝트")) {
                                         if (document.getData().get("img") != null) {
                                             postList.add(new ParticipateItem(
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),
@@ -227,9 +226,9 @@ public class Fragment2 extends Fragment {
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),
@@ -259,15 +258,15 @@ public class Fragment2 extends Fragment {
                             ArrayList<ParticipateItem> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
-                                    if(!((Boolean) document.getData().get("isJoin"))) {
+                                    if(document.getData().get("isParticipate").toString().equals("동호회")) {
                                         if (document.getData().get("img") != null) {
                                             postList.add(new ParticipateItem(
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),
@@ -280,9 +279,9 @@ public class Fragment2 extends Fragment {
                                                     document.getData().get("title").toString(),
                                                     document.getData().get("school").toString(),
                                                     document.getData().get("limitmember").toString(),
-                                                    document.getData().get("participate_Uid").toString(),
-                                                    document.getData().get("participate_Name").toString(),
-                                                    (Boolean) document.getData().get("isParticipate"),
+                                                    document.getData().get("participateUid").toString(),
+                                                    document.getData().get("participateName").toString(),
+                                                    document.getData().get("isParticipate").toString(),
                                                     document.getData().get("category").toString(),
                                                     document.getData().get("phone").toString(),
                                                     document.getData().get("content").toString(),

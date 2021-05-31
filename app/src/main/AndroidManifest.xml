@@ -37,6 +37,8 @@
         <activity android:name=".dummyActivity"/>
         <activity android:name=".JoinPostingActivity"/>
         <activity android:name=".JoinContent"/>
+        <activity android:name=".ParticipatePost"/>
+        <activity android:name=".ParticipateContent"/>
 
     </application>
 
