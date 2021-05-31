@@ -250,9 +250,15 @@ public class PostingActivity extends AppCompatActivity {
                                 sellerName = document.getData().get("name").toString();
                             }
                             if (title.length() > 0) {
-                                String price = priceEditText.getText().toString();
-                                String sellerUid = user.getUid();
                                 boolean isSelling = (isSellingSpinner.getSelectedItem().toString().equals("판매"));
+                                String price;
+                                if(!isSelling) {
+                                    price = "물물거래";
+                                }
+                                else{
+                                    price = priceEditText.getText().toString();
+                                }
+                                String sellerUid = user.getUid();
                                 String category = sellCategorySpinner.getSelectedItem().toString();
                                 String phone = phoneEditText.getText().toString();
                                 String content = postContentEditText.getText().toString();
