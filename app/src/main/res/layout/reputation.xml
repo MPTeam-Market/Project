@@ -9,13 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"/>
 
-    <View
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#9e9d9d"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv4"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

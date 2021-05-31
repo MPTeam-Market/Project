@@ -40,6 +40,79 @@ import java.util.Date;
 import java.util.List;
 
 public class reputa extends AppCompatActivity {
+    private static final String TAG = "HomeFragment";
+    private FirebaseFirestore firebaseFirestore;
+    private InfoAdapter InfoAdapter;
+    private RecyclerView recyclerView;
+    private final FirebaseAuth Auth = FirebaseAuth.getInstance();
+    FirebaseUser user = Auth.getCurrentUser();
+    String uid = user.getUid();
+
+    public reputa() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.reputation, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = view.findViewById(R.id.rv_list);
+
+
+        recyclerView.setHasFixedSize(true);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CollectionReference collectionReference = firebaseFirestore.collection("Info");
+        collectionReference
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(10).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<MyInfo> postList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(document.getData().get("uid").toString().equals("uid")) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    postList.add(new MyInfo(
+                                            document.getData().get("title").toString(),
+                                            document.getData().get("name").toString(),
+                                            new Date(document.getDate("date").getTime()),
+                                            (ArrayList<String>) document.getData().get("contents"),
+                                            document.getData().get("uid").toString(),
+                                            document.getData().get("university").toString(),
+                                            document.getId()
+                                    ));
+                                }
+                                else{ }
+                            }
+
+                            recyclerView.setAdapter(InfoAdapter);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+
+
+
+
 
 
 }
