@@ -42,7 +42,7 @@ public class Fragment5 extends Fragment {
     private String uid = null;
 
 
-    private DatabaseReference mDatabase;
+    DatabaseReference mDatabase;
 
     private final FirebaseAuth Auth = FirebaseAuth.getInstance();
 
@@ -57,6 +57,7 @@ public class Fragment5 extends Fragment {
     DatabaseReference myRef;
     SharedPreferences sh_Pref;
 
+    /*
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -79,42 +80,24 @@ public class Fragment5 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //realtime base
-        TextView textView, textView2,textView3,textView4;
+        TextView textView, textView2, textView3, textView4;
         View v = inflater.inflate(R.layout.fragment_5, container, false);
-        textView = v.findViewById(R.id.name);   //이메일 읽기
+        textView = v.findViewById(R.id.email);   //이메일 읽기
+        textView2 = v.findViewById(R.id.nickname);
+        textView3 = v.findViewById(R.id.collage);
+
         FirebaseUser user = Auth.getCurrentUser();
         textView.setText(user.getEmail());
 
 
-/*
-        myRef = database.getReference("users");
-        String Email = user.getEmail();
-        DatabaseReference name = myRef.child(Email).child("Name");
-        name.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String text = snapshot.getValue(String.class);
-                textView2.setText(text);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
 
-        String Email = user.getEmail(); // 로그인한 유저의 고유 uid 가져오기
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance(); // 파이어베이스 realtime database 에서 정보 가져오기
-        DatabaseReference Nickname = mDatabase.getReference("Nickame");    // 닉네임
-        Nickname.setValue(textView2.getText().toString());
-*/
-/*
-        String email = user!=null?user.getEmail():null;
+        String uid = user.getUid();
         myRef = database.getInstance().getReference("users");
-        DatabaseReference name = myRef.child(email).child("Name");
+
+        DatabaseReference name = myRef.child(uid).child("Nickname");
         name.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,9 +111,22 @@ public class Fragment5 extends Fragment {
             }
         });
 
+        DatabaseReference School = myRef.child(uid).child("School");
+        School.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String text = snapshot.getValue(String.class);
+                textView3.setText(text);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //데베 읽기
 
-*/
+
         Button edit = v.findViewById(R.id.edit);
         edit.setOnClickListener(v1 -> {
             Intent intent = new Intent(getActivity(), myedit.class);
@@ -171,11 +167,10 @@ public class Fragment5 extends Fragment {
         return v;
     }
 
-    /*
-    //소윤님 깃허브에서 가져온 내용
+/*
     private void showInfo(TextView textView2, TextView textView3, TextView textView4) {
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("users")
+        firebaseFirestore.collection("Info")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -184,16 +179,14 @@ public class Fragment5 extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (!document.getId().equals(_userID)) continue;
-                                textView3.setText(document.getData().get("NickName").toString());
-                                textView4.setText(document.getData().get("Name").toString());
-                                textView2.setText(document.getData().get("School").toString());
+                                textView2.setText(document.getData().get("title").toString());
+
                                 break;
                             }
                         }
                     }
                 });
-
     }
-    */
+ */
 
 }
