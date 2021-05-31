@@ -15,17 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.example.hhhhhh.SellItem;
+import com.example.hhhhhh.JoinItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JoinAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<SellItem> joinItemList;
+    private ArrayList<JoinItem> joinItemList;
     private Activity activity;
 
-    public JoinAdapter(Activity activity, ArrayList<SellItem> myDataset) {
+    public JoinAdapter(Activity activity, ArrayList<JoinItem> myDataset) {
         this.activity = activity;
         this.joinItemList = myDataset;
     }
@@ -36,7 +36,7 @@ public class JoinAdapter extends BaseAdapter {
     }
 
     @Override
-    public SellItem getItem(int position) {
+    public JoinItem getItem(int position) {
         return joinItemList.get(position);
     }
 
@@ -53,12 +53,12 @@ public class JoinAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.sr_item, parent, false);
+            convertView = inflater.inflate(R.layout.join_item, parent, false);
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(activity, Sellcontent.class);
+                    Intent intent = new Intent(activity, JoinContent.class);
                     intent.putExtra("postInfo", joinItemList.get(position));
                     activity.startActivity(intent);
                 }
@@ -67,25 +67,20 @@ public class JoinAdapter extends BaseAdapter {
         }
 
         //convertView = LayoutInflater.from(context).inflate(R.layout.chatroomlist,null);
-        TextView title = (TextView) convertView.findViewById(R.id.sell_title);
-        TextView price = (TextView) convertView.findViewById(R.id.sell_price);
-        TextView school = (TextView) convertView.findViewById(R.id.sell_school);
-        ImageView img = (ImageView) convertView.findViewById(R.id.sellimg);
+        TextView title = (TextView) convertView.findViewById(R.id.join_title);
+        TextView price = (TextView) convertView.findViewById(R.id.join_price);
+        TextView school = (TextView) convertView.findViewById(R.id.join_school);
 
-        SellItem item = joinItemList.get(position);
-        school.setText(item.getSchool());
+
+        JoinItem item = joinItemList.get(position);
+        school.setText("학교: "+item.getSchool());
         title.setText(item.getTitle());
-        price.setText(item.getPrice());
-        if(item.getImg() != "" && item.getImg() != null){
-            img.setScaleType(ImageView.ScaleType.FIT_XY);
-            img.setAdjustViewBounds(true);
+        price.setText("작성자:"+item.getWriterName());
 
-            Glide.with(convertView).load(item.getImg()).override(1000).into(img);
-        }
         return convertView;
     }
 
-    public void addItem(SellItem item) {
+    public void addItem(JoinItem item) {
         joinItemList.add(item);
     }
 

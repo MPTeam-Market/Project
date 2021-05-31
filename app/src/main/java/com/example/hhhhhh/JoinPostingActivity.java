@@ -71,13 +71,13 @@ public class JoinPostingActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        titleEditText = findViewById(R.id.posting_title);
-        isJoinSpinner = findViewById(R.id.category);
-        joinLocationSpinner = findViewById(R.id.location_category);
-        priceEditText = findViewById(R.id.posting_price);
-        phoneEditText = findViewById(R.id.posting_phone);
-        postContentEditText = findViewById(R.id.posting_content);
-        imageView = findViewById(R.id.posting_img);
+        titleEditText = findViewById(R.id.joinposting_title);
+        isJoinSpinner = findViewById(R.id.joincategory);
+        joinLocationSpinner = findViewById(R.id.joinlocation_category);
+        priceEditText = findViewById(R.id.joinposting_salary);
+        phoneEditText = findViewById(R.id.joinposting_phone);
+        postContentEditText = findViewById(R.id.joinposting_content);
+        imageView = findViewById(R.id.joinposting_img);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -92,7 +92,7 @@ public class JoinPostingActivity extends AppCompatActivity {
         joinLocationSpinner.setAdapter(adapter2);
 
 
-        posting_btn = findViewById(R.id.posting_btn);
+        posting_btn = findViewById(R.id.joinposting_btn);
         posting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +100,7 @@ public class JoinPostingActivity extends AppCompatActivity {
             }
         });
 
-        posting_image = findViewById(R.id.posting_image_btn);
+        posting_image = findViewById(R.id.joinposting_image_btn);
         posting_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +165,7 @@ public class JoinPostingActivity extends AppCompatActivity {
                                                 if (title.length() > 0) {
                                                     String price = priceEditText.getText().toString();
                                                     String writerUid = user.getUid();
-                                                    boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("판매"));
+                                                    boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("배달대행"));
                                                     String category = joinLocationSpinner.getSelectedItem().toString();
                                                     String phone = phoneEditText.getText().toString();
                                                     String content = postContentEditText.getText().toString();
@@ -198,7 +198,7 @@ public class JoinPostingActivity extends AppCompatActivity {
                             if (title.length() > 0) {
                                 String price = priceEditText.getText().toString();
                                 String writerUid = user.getUid();
-                                boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("판매"));
+                                boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("배달대행"));
                                 String category = joinLocationSpinner.getSelectedItem().toString();
                                 String phone = phoneEditText.getText().toString();
                                 String content = postContentEditText.getText().toString();
