@@ -71,13 +71,12 @@ public class JoinPostingActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        titleEditText = findViewById(R.id.posting_title);
-        isJoinSpinner = findViewById(R.id.category);
-        joinLocationSpinner = findViewById(R.id.location_category);
-        priceEditText = findViewById(R.id.posting_price);
-        phoneEditText = findViewById(R.id.posting_phone);
-        postContentEditText = findViewById(R.id.posting_content);
-        imageView = findViewById(R.id.posting_img);
+        titleEditText = findViewById(R.id.joinposting_title);
+        isJoinSpinner = findViewById(R.id.joincategory);
+        joinLocationSpinner = findViewById(R.id.joinlocation_category);
+        priceEditText = findViewById(R.id.joinposting_salary);
+        phoneEditText = findViewById(R.id.joinposting_phone);
+        postContentEditText = findViewById(R.id.joinposting_content);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -92,7 +91,7 @@ public class JoinPostingActivity extends AppCompatActivity {
         joinLocationSpinner.setAdapter(adapter2);
 
 
-        posting_btn = findViewById(R.id.posting_btn);
+        posting_btn = findViewById(R.id.joinposting_btn);
         posting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,119 +99,40 @@ public class JoinPostingActivity extends AppCompatActivity {
             }
         });
 
-        posting_image = findViewById(R.id.posting_image_btn);
-        posting_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
-                startActivityForResult(intent, 0);
-            }
-        });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case 0:
-                if (resultCode == Activity.RESULT_OK) {
-                    imagePath = data.getStringExtra("path");
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    imageView.setAdjustViewBounds(true);
-
-                    Glide.with(this).load(imagePath).override(1000).into(imageView);
-                }
-                break;
-        }
-    }
 
     private void upLoad() {
-        if(imagePath != null) {
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReference();
-            String[] patharray = imagePath.split("\\.");
-            final StorageReference mountainImagesRef = storageRef.child("users/" + user.getUid() + "/" + 0 + "." + patharray[patharray.length - 1]);
-            try {
-                InputStream stream = new FileInputStream(new File(imagePath));
-                StorageMetadata metadata = new StorageMetadata.Builder()
-                        .setCustomMetadata("index", "" + (0)).build();
 
-                UploadTask uploadTask = mountainImagesRef.putStream(stream, metadata);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
+        final String title = titleEditText.getText().toString();
+        CollectionReference collection = db.collection("User");
+        collection.document(user.getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        final int index = Integer.parseInt(taskSnapshot.getMetadata().getCustomMetadata("index"));
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            school = document.getData().get("school").toString();
+                            writerName = document.getData().get("name").toString();
+                        }
+                        if (title.length() > 0) {
+                            String price = priceEditText.getText().toString();
+                            String writerUid = user.getUid();
+                            boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("배달대행"));
+                            String category = joinLocationSpinner.getSelectedItem().toString();
+                            String phone = phoneEditText.getText().toString();
+                            String content = postContentEditText.getText().toString();
 
-                        mountainImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                final String title = titleEditText.getText().toString();
-                                CollectionReference collection = db.collection("User");
-                                collection.document(user.getUid()).get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if(task.isSuccessful()){
-                                                    DocumentSnapshot document = task.getResult();
-                                                    school = document.getData().get("school").toString();
-                                                    writerName = document.getData().get("name").toString();
-                                                }
-                                                if (title.length() > 0) {
-                                                    String price = priceEditText.getText().toString();
-                                                    String writerUid = user.getUid();
-                                                    boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("판매"));
-                                                    String category = joinLocationSpinner.getSelectedItem().toString();
-                                                    String phone = phoneEditText.getText().toString();
-                                                    String content = postContentEditText.getText().toString();
+                            JoinItem join = new JoinItem(title, school, price, writerUid, writerName, isJoin, category, phone, content, new Date(), "");
 
-                                                    JoinItem join = new JoinItem(title, school, price, writerUid, writerName, isJoin, category, phone, content, new Date(), uri.toString());
-
-                                                    storeUpload(join);
-                                                }
-                                            }
-                                        });
-                            }
-                        });
+                            storeUpload(join);
+                        }
                     }
                 });
-            } catch (FileNotFoundException e) {
-                Log.e("로그", "에러: " + e.toString());
-            }
-        }else{
-            final String title = titleEditText.getText().toString();
-            CollectionReference collection = db.collection("User");
-            collection.document(user.getUid()).get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if(task.isSuccessful()){
-                                DocumentSnapshot document = task.getResult();
-                                school = document.getData().get("school").toString();
-                                writerName = document.getData().get("name").toString();
-                            }
-                            if (title.length() > 0) {
-                                String price = priceEditText.getText().toString();
-                                String writerUid = user.getUid();
-                                boolean isJoin = (isJoinSpinner.getSelectedItem().toString().equals("판매"));
-                                String category = joinLocationSpinner.getSelectedItem().toString();
-                                String phone = phoneEditText.getText().toString();
-                                String content = postContentEditText.getText().toString();
 
-                                JoinItem join = new JoinItem(title, school, price, writerUid, writerName, isJoin, category, phone, content, new Date(), "");
-
-                                storeUpload(join);
-                            }
-                        }
-                    });
-        }
     }
 
-    private void storeUpload (JoinItem join){
+    private void storeUpload(JoinItem join) {
         db.collection("join")
                 .add(join)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

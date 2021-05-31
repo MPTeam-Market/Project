@@ -15,35 +15,36 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.example.hhhhhh.JoinItem;
+import com.example.hhhhhh.SellItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoinAdapter extends BaseAdapter {
+public class ParticipateAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<JoinItem> joinItemList;
+    private ArrayList<ParticipateItem> ParticipateItemList;
     private Activity activity;
 
-    public JoinAdapter(Activity activity, ArrayList<JoinItem> myDataset) {
+    public ParticipateAdapter(Activity activity, ArrayList<ParticipateItem> myDataset) {
         this.activity = activity;
-        this.joinItemList = myDataset;
+        this.ParticipateItemList = myDataset;
     }
 
     @Override
     public int getCount() {
-        return joinItemList.size();
+        return ParticipateItemList.size();
     }
 
     @Override
-    public JoinItem getItem(int position) {
-        return joinItemList.get(position);
+    public ParticipateItem getItem(int position) {
+        return ParticipateItemList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
+
 
     public static class ViewHolder{
         public TextView t;
@@ -57,42 +58,42 @@ public class JoinAdapter extends BaseAdapter {
         final int pos = position;
         final Context context = parent.getContext();
 
-        final ViewHolder viewHolder;
+        final ParticipateAdapter.ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.join_item, parent, false);
+            convertView = inflater.inflate(R.layout.participate_item, parent, false);
 
-            viewHolder = new ViewHolder();
+            viewHolder = new ParticipateAdapter.ViewHolder();
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(activity, JoinContent.class);
-                    intent.putExtra("postInfo", joinItemList.get(position));
+                    Intent intent = new Intent(activity, ParticipateContent.class);
+                    intent.putExtra("postInfo", ParticipateItemList.get(position));
                     activity.startActivity(intent);
                 }
             });
 
-            viewHolder.t = (TextView) convertView.findViewById(R.id.join_title);
-            viewHolder.p = (TextView) convertView.findViewById(R.id.join_price);
-            viewHolder.s = (TextView) convertView.findViewById(R.id.join_school);
+            viewHolder.t = (TextView) convertView.findViewById(R.id.participate_title);
+            viewHolder.p = (TextView) convertView.findViewById(R.id.participate_limitmember);
+            viewHolder.s = (TextView) convertView.findViewById(R.id.participate_school);
 
             convertView.setTag(viewHolder);
         }
         else{
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ParticipateAdapter.ViewHolder) convertView.getTag();
         }
 
-        JoinItem item = joinItemList.get(position);
+        ParticipateItem item = ParticipateItemList.get(position);
         viewHolder.t.setText("학교: "+item.getSchool());
         viewHolder.p.setText(item.getTitle());
-        viewHolder.s.setText("작성자:"+item.getWriterName());
+        viewHolder.s.setText("작성자:"+item.getParticipateName());
 
         return convertView;
     }
 
-    public void addItem(JoinItem item) {
-        joinItemList.add(item);
+    public void addItem(ParticipateItem item) {
+        ParticipateItemList.add(item);
     }
 
 

@@ -23,18 +23,26 @@
             android:gravity="left|center_vertical"
             android:text="SCHOOL"
             android:textColor="#191919"
-            android:textSize="13sp" />
+            android:textSize="12sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/login_school"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:includeFontPadding="false"
-            android:inputType="textPassword"
             android:textColor="#707070"
             android:textSize="14sp"
             android:background="@null"
             android:layout_weight="7"/>
+
+        <Button
+            android:id="@+id/find_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:backgroundTint="#F3F3F3"
+            android:textColor="#191919"
+            android:text="학교 찾기"/>
 
     </LinearLayout>
 

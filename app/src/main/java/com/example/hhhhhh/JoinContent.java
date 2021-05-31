@@ -19,13 +19,8 @@ public class JoinContent extends AppCompatActivity {
 
         JoinItem joinItem = (JoinItem) getIntent().getSerializableExtra("postInfo");
 
-        ImageView imageView = findViewById(R.id.image);
-        if(joinItem.getImg() != "" && joinItem.getImg() != null){
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setAdjustViewBounds(true);
-
-            Glide.with(this).load(joinItem.getImg()).override(1000).into(imageView);
-        }
+        TextView title = findViewById(R.id.join_textview);
+        title.setText(joinItem.getTitle());
 
         TextView writer = findViewById(R.id.joincontent_writer);
         writer.setText("닉네임: "+joinItem.getWriterName());
@@ -35,10 +30,10 @@ public class JoinContent extends AppCompatActivity {
 
         String category1;
         if(joinItem.getIsJoin()){
-            category1 = "판매";
+            category1 = "배달대행";
         }
         else{
-            category1 = "교환";
+            category1 = "알바대타";
         }
         TextView category = findViewById(R.id.join_content_title);
         category.setText("카테고리: "+category1+", "+joinItem.getCategory());
