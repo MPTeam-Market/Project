@@ -1,64 +1,118 @@
 package com.example.hhhhhh;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment1#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Fragment1 extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Fragment1() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment1.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment1 newInstance(String param1, String param2) {
-        Fragment1 fragment = new Fragment1();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    JoinAdapter adatper;
+    ListView joinview;
+    ArrayList<JoinItem> RoomList;
+    Button addbtn;
+    Spinner category_spinner;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_1, container, false);
+        setHasOptionsMenu(true);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        View v = inflater.inflate(R.layout.fragment_1, container, false);
+        RoomList = new ArrayList<JoinItem>();
+        addbtn = (Button) v.findViewById(R.id.plusbtn);
+        joinview = (ListView) v.findViewById(R.id.lv1);
+
+        joinview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), Sellcontent.class);
+            }
+        });
+        addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PostingActivity.class);
+                startActivity(intent);
+            }
+        });
+        category_spinner = v.findViewById(R.id.fragment1_spinner);
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CollectionReference collectionReference = firebaseFirestore.collection("join");
+        collectionReference
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(10).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<SellItem> postList = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getData().get("school").toString().toLowerCase().equals("gachon")) {
+                                    if (document.getData().get("img") != null) {
+                                        postList.add(new SellItem(
+                                                document.getData().get("title").toString(),
+                                                document.getData().get("school").toString(),
+                                                document.getData().get("price").toString(),
+                                                document.getData().get("sellerUid").toString(),
+                                                document.getData().get("sellerName").toString(),
+                                                (Boolean) document.getData().get("isSelling"),
+                                                document.getData().get("category").toString(),
+                                                document.getData().get("phone").toString(),
+                                                document.getData().get("content").toString(),
+                                                new Date(document.getDate("date").getTime()),
+                                                document.getData().get("img").toString(),
+                                                document.getId()
+                                        ));
+                                    } else {
+                                        postList.add(new SellItem(
+                                                document.getData().get("title").toString(),
+                                                document.getData().get("school").toString(),
+                                                document.getData().get("price").toString(),
+                                                document.getData().get("sellerUid").toString(),
+                                                document.getData().get("sellerName").toString(),
+                                                (Boolean) document.getData().get("isSelling"),
+                                                document.getData().get("category").toString(),
+                                                document.getData().get("phone").toString(),
+                                                document.getData().get("content").toString(),
+                                                new Date(document.getDate("date").getTime()),
+                                                "", document.getId()
+                                        ));
+                                    }
+                                }
+                            }
+                            adatper = new JoinAdapter(getActivity(), postList);
+                            joinview.setAdapter(adatper);
+                        }
+                    }
+                });
     }
 }
