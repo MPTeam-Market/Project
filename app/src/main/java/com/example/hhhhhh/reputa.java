@@ -55,22 +55,17 @@ public class reputa extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.reputation, container, false);
+        setContentView(R.layout.reputation);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        recyclerView = view.findViewById(R.id.rv_list);
-
+        recyclerView = findViewById(R.id.rv_list);
 
         recyclerView.setHasFixedSize(true);
-
-        return view;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+
+
 
     @Override
     public void onResume() {
@@ -85,7 +80,7 @@ public class reputa extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             ArrayList<MyInfo> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if(document.getData().get("uid").toString().equals("uid")) {
+                                if(document.getData().get("uid").toString().equals(uid)) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     postList.add(new MyInfo(
                                             document.getData().get("title").toString(),
@@ -99,7 +94,7 @@ public class reputa extends AppCompatActivity {
                                 }
                                 else{ }
                             }
-
+                            InfoAdapter = new InfoAdapter(reputa.this, postList);
                             recyclerView.setAdapter(InfoAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -107,12 +102,5 @@ public class reputa extends AppCompatActivity {
                     }
                 });
     }
-
-
-
-
-
-
-
 
 }
